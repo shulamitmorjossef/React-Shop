@@ -1,23 +1,17 @@
-// src/components/StoreItems.jsx
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getProducts } from "../services/productsService.js";
 
-function StoreItems() {
+export default function StoreItems() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const data = getProducts();
-
-    setProducts(data);
-
-    console.log("products (returned from service):", data);
+    getProducts()
+      .then((data) => {
+        setProducts(data);
+        console.log("Products state:", data);
+      })
+      .catch((err) => console.error(err));
   }, []);
 
-  useEffect(() => {
-    console.log("products state updated:", products);
-  }, [products]);
-
-  return null;
+  return null; 
 }
-
-export default StoreItems;
